@@ -149,6 +149,10 @@ logger:
 # Enable Home Assistant API
 api:
   services:
+  - service: clean_scanned_tag_id_sensor
+    then:
+      - lambda: 'id(scanned_tag_id_sensor).publish_state("");'
+      
   - service: rfidreader_tag_ok
     then:
     - rtttl.play: "beep:d=16,o=5,b=100:b"
@@ -230,7 +234,7 @@ i2c:
 uart:
   rx_pin: D3
   baud_rate: 9600
-
+  
 globals:
   - id: source
     type: std::string
